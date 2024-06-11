@@ -12,6 +12,7 @@ $(document).ready(function () {
 			firstName: $('input[name="firstName"]').val(),
 			lastName: $('input[name="lastName"]').val(),
 			email: $('input[name="email"]').val(),
+			phone: $('input[name="phone"]').val(),
 			message: $('textarea[name="message"]').val()
 		};
 
@@ -22,6 +23,7 @@ $(document).ready(function () {
 			template_params: {
 				'from_name': formData.firstName + ' ' + formData.lastName,
 				'email': formData.email,
+				'phone': formData.phone,
 				'message': formData.message,
 				'to_name': 'Capital Diversa',
 				'to_email': 'capitaldiversa01@gmail.com'
