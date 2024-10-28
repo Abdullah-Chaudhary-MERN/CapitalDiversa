@@ -1,5 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacked Error Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        .error-container {
+            text-align: center;
+            z-index: 1;
+        }
+        .error-container h1 {
+            font-size: 5rem;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            position: relative;
+            text-shadow: 2px 2px 8px red;
+        }
+        .error-container p {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+        .error-container button {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-top: 20px;
+            z-index: 1;
+        }
+        .error-container button:hover {
+            background-color: #ff4c4c;
+        }
+        .moving-error {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 107, 107, 0.7);
+            opacity: 0.8;
+            z-index: 0;
+            text-shadow: 1px 1px 5px red;
+        }
+        .red-ball {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .glitch-error {
+            color: #ff0000;
+            position: absolute;
+            opacity: 0.5;
+            font-size: 2rem;
+            text-shadow: 0 0 10px red, 0 0 20px lime, 0 0 30px blue;
+        }
+        .hacker-duck {
+            position: absolute;
+            width: 50px;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-container">
+        <h1 class="error-title">404</h1>
+        <p>System Error Detected!</p>
+        <button id="backHomeBtn">Go Back to Safety</button>
+    </div>
+
+    <!-- Multiple moving error signs -->
+    <div class="moving-error">404</div>
+    <div class="moving-error">Error!</div>
+    <div class="moving-error">System Failure</div>
+    <div class="moving-error">Hacked!</div>
+    <div class="moving-error">Critical Error</div>
+    
+    <!-- Red balls -->
+    <div class="red-ball"></div>
+    <div class="red-ball"></div>
+    <div class="red-ball"></div>
+    <div class="red-ball"></div>
+    <div class="red-ball"></div>
+    <div class="red-ball"></div>
+    <div class="red-ball"></div>
+    <div class="red-ball"></div>
+    <div class="red-ball"></div>
+    <div class="red-ball"></div>
+    
+    <!-- Hacking ducks -->
+    <img src="images/duck.png" alt="Hacker Duck" class="hacker-duck" />
+    <img src="images/duck.png" alt="Hacker Duck" class="hacker-duck" />
+    <img src="images/duck.png" alt="Hacker Duck" class="hacker-duck" />
+    <img src="images/duck.png" alt="Hacker Duck" class="hacker-duck" />
+
+    <!-- Glitching text effects -->
+    <div class="glitch-error">Error 404</div>
+    <div class="glitch-error">System Corrupt</div>
+    <div class="glitch-error">Unauthorized Access</div>
+
+    <script>
+        $(document).ready(function() {
+            // Main error title fade and bounce animation
+            $('.error-title').hide().fadeIn(1000);
+
+            function bounceAnimation() {
+                $('.error-title').animate({ marginTop: '-20px' }, 200)
+                                .animate({ marginTop: '0px' }, 200)
+                                .animate({ marginTop: '-10px' }, 200)
+                                .animate({ marginTop: '0px' }, 200);
+            }
+            bounceAnimation();
+            setInterval(bounceAnimation, 3000);
+
+            // Moving error signs with random positions
+            function moveErrorSign(selector) {
+                var windowWidth = $(window).width() - $(selector).width();
+                var windowHeight = $(window).height() - $(selector).height();
+
+                var newX = Math.floor(Math.random() * windowWidth);
+                var newY = Math.floor(Math.random() * windowHeight);
+
+                $(selector).animate({
+                    left: newX + 'px',
+                    top: newY + 'px'
+                }, 2000, function() {
+                    moveErrorSign(selector); // Repeat the animation
+                });
+            }
+
+            // Apply moving animation to all error messages
+            $('.moving-error').each(function() {
+                moveErrorSign(this);
+            });
+
+            // Moving and bouncing red balls with different shades of red
+            function moveRedBall(selector) {
+                var windowWidth = $(window).width() - $(selector).width();
+                var windowHeight = $(window).height() - $(selector).height();
+                var speedX = Math.random() * 10 + 5;
+                var speedY = Math.random() * 10 + 5;
+                var posX = Math.random() * windowWidth;
+                var posY = Math.random() * windowHeight;
+                var directionX = 1;
+                var directionY = 1;
+
+                setInterval(function () {
+                    posX += speedX * directionX;
+                    posY += speedY * directionY;
+
+                    // Reverse direction if it hits the edge
+                    if (posX <= 0 || posX >= windowWidth) directionX *= -1;
+                    if (posY <= 0 || posY >= windowHeight) directionY *= -1;
+
+                    $(selector).css({
+                        left: posX + 'px',
+                        top: posY + 'px'
+                    });
+                }, 30);
+            }
+
+            // Apply the movement to all red balls
+            $('.red-ball').each(function(index) {
+                $(this).css('background-color', `rgba(255, ${Math.floor(100 + Math.random() * 150)}, ${Math.floor(100 + Math.random() * 150)}, 0.8)`);
+                moveRedBall(this);
+            });
+
+            // Moving ducks like hacking attackers
+            function moveDuck(selector) {
+                var windowWidth = $(window).width() - $(selector).width();
+                var windowHeight = $(window).height() - $(selector).height();
+                var newX = Math.floor(Math.random() * windowWidth);
+                var newY = Math.floor(Math.random() * windowHeight);
+
+                $(selector).animate({
+                    left: newX + 'px',
+                    top: newY + 'px'
+                }, 1500, function() {
+                    moveDuck(selector); // Repeat the animation
+                });
+            }
+
+            // Apply moving animation to hacker ducks
+            $('.hacker-duck').each(function() {
+                moveDuck(this);
+            });
+
+            // Glitch effect animation for glitch-error texts
+            function glitchEffect() {
+                $('.glitch-error').each(function() {
+                    var randomX = Math.random() * 10 - 5;
+                    var randomY = Math.random() * 10 - 5;
+                    var opacity = Math.random();
+
+                    $(this).css({
+                        transform: 'translate(' + randomX + 'px, ' + randomY + 'px)',
+                        opacity: opacity
+                    });
+                });
+            }
+            setInterval(glitchEffect, 100); // Glitch effect every 100ms
+
+            // Back to home button functionality
+            $('#backHomeBtn').click(function() {
+                window.location.href = '/'; // Redirect to home
+            });
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <title>Capital Diversa</title>
     <meta charset="utf-8" />
@@ -80,9 +306,9 @@
                 >
               </a>
               <span class="mx-md-2 d-inline-block"></span>
-              <a href="tel:+923125152535" class="text-white"
+              <a href="tel:+923392124447" class="text-white"
                 ><span class="mr-2 text-white icon-phone"></span>
-                <span class="d-none d-md-inline-block">+92 312 5152535</span></a
+                <span class="d-none d-md-inline-block">+92 339 2124447</span></a
               >
 
               <div class="float-right">

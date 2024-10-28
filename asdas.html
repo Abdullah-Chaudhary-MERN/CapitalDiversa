@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player</title>
+    <style>
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #playPauseBtn {
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #seekBar {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="audio-player">
+    <audio id="audio" src="YOUR_AUDIO_FILE.mp3"></audio>
+    <button id="playPauseBtn" class="play">Play</button>
+    <input type="range" id="seekBar" value="0" step="1" min="0" max="100">
+    <span id="duration">0:00</span>
+</div>
+
+<script>
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const seekBar = document.getElementById('seekBar');
+    const durationDisplay = document.getElementById('duration');
+
+    // Update seek bar as the audio plays
+    audio.addEventListener('timeupdate', () => {
+        seekBar.value = (audio.currentTime / audio.duration) * 100;
+        durationDisplay.textContent = formatTime(audio.currentTime);
+    });
+
+    // Play or pause the audio
+    playPauseBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            playPauseBtn.textContent = 'Pause';
+        } else {
+            audio.pause();
+            playPauseBtn.textContent = 'Play';
+        }
+    });
+
+    // Seek audio
+    seekBar.addEventListener('input', () => {
+        audio.currentTime = (seekBar.value / 100) * audio.duration;
+    });
+
+    // Format time for display
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes}:${secs < 10 ? '0' + secs : secs}`;
+    }
+</script>
+
+</body>
+</html>
